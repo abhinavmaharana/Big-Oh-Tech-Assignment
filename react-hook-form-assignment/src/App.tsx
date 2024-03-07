@@ -5,7 +5,6 @@ import SecondStepForm from './components/Form/SecondStepForm';
 
 const App: React.FC = () => {
   const methods = useForm();
-  const { control } = methods;
   const [formData, setFormData] = useState<FieldValues>({});
 
   const handleUserInfoSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -13,8 +12,7 @@ const App: React.FC = () => {
   };
 
   const handleSecondStepSubmit: SubmitHandler<FieldValues> = (data) => {
-    // Handle final submission logic with combined data
-    console.log({ ...formData, ...data });
+    setFormData((prev) => ({ ...prev, ...data }));
   };
 
   return (
@@ -24,7 +22,7 @@ const App: React.FC = () => {
         <UserInfoForm onNext={handleUserInfoSubmit} />
         {/* Display the SecondStepForm only if the user has filled out the first form */}
         {Object.keys(formData).length > 0 && (
-          <SecondStepForm onPrevious={() => {}} />
+          <SecondStepForm onPrevious={handleSecondStepSubmit} />
         )}
       </div>
     </FormProvider>

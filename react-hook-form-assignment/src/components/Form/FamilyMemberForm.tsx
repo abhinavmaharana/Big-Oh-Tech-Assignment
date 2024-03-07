@@ -1,5 +1,5 @@
 import React from 'react';
-import { useForm, SubmitHandler, FieldValues, Control, Path, RegisterOptions, useController, useFormContext } from 'react-hook-form';
+import { SubmitHandler, FieldValues, Path, RegisterOptions, useController, useFormContext } from 'react-hook-form';
 
 type FamilyMemberFormProps = {
   onRemove: () => void;
@@ -27,10 +27,11 @@ const InputField: React.FC<FormFieldProps<FieldValues>> = ({ name, rules }) => {
 };
 
 const FamilyMemberForm: React.FC<FamilyMemberFormProps> = ({ onRemove }) => {
-    const { control, handleSubmit } = useFormContext();
+    const { handleSubmit } = useFormContext();
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
       // Handle family member form submission logic
+      console.log(data);
     };
   return (
     <div className="max-w-md mx-auto mt-4 p-4 bg-gray-100 rounded shadow-md">

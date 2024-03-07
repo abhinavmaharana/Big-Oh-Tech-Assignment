@@ -3,7 +3,7 @@ import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import FamilyMemberForm from './FamilyMemberForm';
 
 type SecondStepFormProps = {
-  onPrevious: () => void;
+  onPrevious: (data: FieldValues) => void;
 };
 
 const SecondStepForm: React.FC<SecondStepFormProps> = ({ onPrevious }) => {
@@ -11,11 +11,11 @@ const SecondStepForm: React.FC<SecondStepFormProps> = ({ onPrevious }) => {
 
   const {
     handleSubmit,
-    formState: { errors },
   } = useForm();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     // Handle second step form submission logic
+    console.log(data)
   };
 
   const handleAddFamilyMember = () => {
