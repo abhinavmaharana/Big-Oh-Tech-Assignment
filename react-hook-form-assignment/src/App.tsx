@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import { useForm, FormProvider, SubmitHandler, FieldValues } from 'react-hook-form';
+import UserInfoForm from './components/Form/UserInfoForm';
+import SecondStepForm from './components/Form/SecondStepForm';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+  const methods = useForm();
+  const { control } = methods;
+  const [formData, setFormData] = useState<FieldValues>({});
+
+  const handleUserInfoSubmit: SubmitHandler<FieldValues> = (data) => {
+    setFormData((prev) => ({ ...prev, ...data }));
+  };
+
+  const handleSecondStepSubmit: SubmitHandler<FieldValues> = (data) => {
+    // Handle final submission logic with combined data
+    console.log({ ...formData, ...data });
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <FormProvider {...methods}>
+      <div className="max-w-md mx-auto mt-8 p-4 bg-white rounded shadow-md">
+        <h1 className="text-2xl font-bold mb-4">Two-Step Form using React-Hook-Form</h1>
+        <UserInfoForm onNext={handleUserInfoSubmit} />
+        {/* Display the SecondStepForm only if the user has filled out the first form */}
+        {Object.keys(formData).length > 0 && (
+          <SecondStepForm onPrevious={() => {}} />
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    </FormProvider>
+  );
+};
 
-export default App
+export default App;
