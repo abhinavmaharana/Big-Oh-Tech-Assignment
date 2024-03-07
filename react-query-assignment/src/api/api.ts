@@ -2,7 +2,7 @@ const API_ENDPOINT = 'https://dummyjson.com/products';
 
 const PAGE_SIZE = 100;
 
-export const fetchProducts = async (page = 1) => {
+export const fetchProducts = async () => {
     const response = await fetch(`${API_ENDPOINT}?limit=${PAGE_SIZE}`);
     return response.json();
 };
